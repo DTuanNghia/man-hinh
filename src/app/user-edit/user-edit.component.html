@@ -1,0 +1,117 @@
+<!-- <div class="modal" >
+  <div class="modal-overlay"> -->
+
+<div class="modal-body">
+  <div class="header"><h1 class="header_h1">Thông tin người dùng</h1></div>
+  <div class="user-info">
+    <div class="first">
+      <p class="name">Tên<span class="require">*</span>:
+        <input
+          class="input-cf"
+          type="text"
+          id="name"
+          [(ngModel)]="name"
+          (ngModelChange)="onInputChange()">
+      </p>
+
+      <p class="phone">Số điện thoại:
+        <input
+          class="input-cf"
+          type="number"
+          name="phone"
+          [(ngModel)]="phone"
+          (ngModelChange)="onInputChange()"></p>
+    </div>
+    <div class="second">
+      <p>Email<span class="require">*</span>:
+        <input
+          class="input-cf"
+          type="email"
+          name="email"
+          [(ngModel)]="email" required
+          (ngModelChange)="onInputChange()">
+      </p>
+    </div>
+    <div class="third">
+      <p>Địa chỉ chi tiết<span class="require">*</span>:
+        <input
+          class="input-cf-add"
+          type="text"
+          name="address"
+          [(ngModel)]="address" required
+          (ngModelChange)="onInputChange()"></p>
+    </div>
+    <div class="four">
+      <p class="city"> Tỉnh/Thành phố <span class="require">*</span>:</p>
+      <button class="btn" nz-button nz-dropdown [nzDropdownMenu]="menu1">
+        <p class="selectp" style="opacity: 0.8">{{ city }}</p>
+        <span class="icon1" nz-icon nzType="down"></span>
+      </button>
+
+      <nz-dropdown-menu
+        #menu1="nzDropdownMenu">
+        <ul nz-menu [(ngModel)]="city">
+          <input
+            class="in-cf"
+            nz-input
+            placeholder="Từ khóa ..." />
+          <li nz-menu-item value="option1" (click)="selectOption('Hà Nội')"> Hà
+            Nội</li>
+          <li nz-menu-item value="option2" (click)="selectOption('Hồ Chí Minh')">
+            Hồ Chí Minh</li>
+        </ul>
+      </nz-dropdown-menu>
+      <p class="district"> Quận/Huyện <span class="require">*</span>:</p>
+      <button class="btn1" nz-button nz-dropdown [nzDropdownMenu]="menu2">
+        <p class="selectp" style="opacity: 0.8">{{ district }}</p>
+        <span class="icon1" nz-icon nzType="down"></span>
+      </button>
+
+      <nz-dropdown-menu
+        #menu2="nzDropdownMenu">
+        <ul nz-menu>
+          <input
+            class="in-cf"
+            nz-input
+            placeholder="Từ khóa ..." />
+          <li nz-menu-item (click)="selectOption1('Huyện 1')"> Huyện 1</li>
+          <li nz-menu-item (click)="selectOption1('Huyện 2')"> Huyện 2</li>
+          <li nz-menu-item (click)="selectOption1('Quận 1')"> Quận 1</li>
+          <li nz-menu-item (click)="selectOption1('Quận 2')"> Quận 2</li>
+        </ul>
+      </nz-dropdown-menu>
+    </div>
+    <div class="five">
+      <p class="ward"> Phường/Xã:</p>
+      <button class="btn2" nz-button nz-dropdown [nzDropdownMenu]="menu3">
+        <p class="selectp" style="opacity: 0.8">{{ ward }}</p>
+        <span class="icon1" nz-icon nzType="down"></span>
+      </button>
+
+      <nz-dropdown-menu
+        #menu3="nzDropdownMenu">
+        <ul nz-menu>
+          <input
+            class="in-cf"
+            nz-input
+            placeholder="Từ khóa ..." />
+          <li nz-menu-item (click)="selectOption2('Xã 1')"> Xã 1</li>
+          <li nz-menu-item (click)="selectOption2('Xã 2')"> Xã 2</li>
+          <li nz-menu-item (click)="selectOption2('Xã 3')"> Xã 3</li>
+        </ul>
+      </nz-dropdown-menu>
+    </div>
+
+  </div>
+  <div class="button">
+    <button class="save" *ngIf="isDirty" (click)="checkInput()">
+      <i class="fa-solid fa-floppy-disk"></i>
+      Lưu
+    </button>
+    <button class="escape" (click)="handleCancel()">
+      <i class="fa-solid fa-x"></i>
+      Thoát
+    </button>
+  </div>
+</div>
+

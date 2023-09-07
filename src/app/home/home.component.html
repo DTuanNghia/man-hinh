@@ -1,0 +1,151 @@
+<div>
+  <div class="user-email">
+    <p class="user-email-cf">Email: </p>
+    <div class="user-email-search">
+      <input type="text"
+        [(ngModel)]="searchInput"
+        class="user-email-search-input" #filter>
+    </div>
+    <!-- (keyup)="filterResults(filter.value)" -->
+
+    <!-- (keydown.enter)="filterResults(filter.value)" button enter -->
+    <button class="user-button-search"
+      (click)="filterResults(filter.value)">
+      <i class="user-button-search-icon fa-solid fa-magnifying-glass"></i>
+    </button>
+
+  </div>
+  <section>
+    <div class="user-table">
+      <div class="first-row">
+        <p class="name">Tên
+          <i class=" fa-solid fa-sort"></i>
+        </p>
+        <p class="email">Email
+          <i class="fa-solid fa-sort-down"></i>
+        </p>
+        <br>
+      </div>
+      <div class="straight">
+        <div
+          *ngFor="let userInfo of filteredUserList |paginate: { itemsPerPage: pageSize, currentPage: currentPage }">
+          <div class="second-row">
+            <p class="name-item" (click)="openModal(userInfo.id)">
+              {{ userInfo.name }}
+            </p>
+            <p class="email-item" (click)="openModal(userInfo.id)">
+              {{ userInfo.email }}
+            </p>
+            <p class="icon-item">
+              <i class="hover del-icon fas fa-trash-can"
+                (click)="deleteItem(userInfo.id)"></i>
+              <i class="hover edit-icon fas fa-pen"
+                (click)="edit(userInfo.id)"></i>
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+  <div class="footer">
+    <div class="footer1">Hiển thị {{getCurrentRowCount()}} trên tổng
+      {{filteredUserList.length}} bản ghi</div>
+    <button [disabled]="currentPage === 1" (click)="previousPage()"><i
+        class="fa-solid fa-angles-left"></i></button>
+    <div class="page-button">
+      <button class="number1" routerLink="/" routerLinkActive="active"
+        [queryParams]="{ page: 1 }">
+        1</button>
+
+      <button class="number2" routerLink="/" routerLinkActive="active"
+        [queryParams]="{ page: 2 }">
+        2</button>
+    </div>
+
+    <button [disabled]="currentPage === totalPages" (click)="nextPage()"><i
+        class="fa-solid fa-angles-right"></i></button>
+  </div>
+
+</div>
+
+<!-- ------------------------- -->
+<form [formGroup]="myForm">
+  <div class="modal" [ngClass]="{'show': modalOpen}" (click)="closeModal()">
+    <div class="modal-overlay" (click)="preventPropagation($event)">
+      <div class="modal-body">
+        <div class="header"><h1 class="header_h1">Thông tin người dùng</h1></div>
+        <div class="user-info">
+          <div class="first">
+            <p class="namemd">Tên <span class="require">*</span>:
+              <input
+                class="input-cf"
+                type="text"
+                id="nameInput"
+                formControlName="name"></p>
+            <p class="phone">Số điện thoại: <input id="phoneInput"
+                class="input-cf"
+                type="number"
+                formControlName="phone"></p>
+          </div>
+          <div class="second">
+            <p>Email <span class="require">*</span>:<input
+                class="input-cf"
+                id="emailInput"
+                type="email"
+                formControlName="email">
+            </p>
+
+          </div>
+          <div class="third">
+            <p>Địa chỉ chi tiết <span class="require">*</span>:<input
+                class="input-cf all"
+                id="addressInput"
+                type="text"
+                formControlName="address"></p>
+          </div>
+          <div class="four">
+            <p>Tỉnh/Thành phố <span class="require">*</span>:
+              <input
+                class="input-cf"
+                id="cityInput"
+                type="text"
+                formControlName="city">
+            </p>
+            <p class="district">Quận/Huyện <span class="require">*</span>:
+              <input
+                class="input-cf"
+                id="districtInput"
+                type="text"
+                formControlName="district">
+            </p>
+          </div>
+          <div class="five">
+            <p>Phường/Xã :
+              <input
+                class="input-cf"
+                id="wardInput"
+                type="text"
+                formControlName="ward">
+            </p>
+          </div>
+
+        </div>
+
+        <div class="button">
+          <button type="submit" class="save" *ngIf="isButtonVisible"
+            (click)="onSubmit()">
+            <i class="fa-solid fa-floppy-disk"></i>
+            Lưu </button>
+          <button class="escape" (click)="closeModal()">
+            <i class="fa-solid fa-x"></i>
+            Thoát
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</form>
