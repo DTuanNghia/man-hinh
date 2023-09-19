@@ -36,20 +36,21 @@ export class homeComponent implements OnInit {
   city: string = '';
   district: string = '';
   ward: string = '';
-
+  isDisabled = false;
+  selectedValue!: string;
   UserInfoList: any[] = [];
   UserService: UserService = inject(UserService);
   filteredUserList: UserInfo[] = [];
   searchInput: any;
   value: any;
-  isEditting = false;
   editData: string = '';
 
-  totalPages!: number;
-  currentPage: number = 1;
-  pageSize: number = 5;
-  displayData: any = [];
-  pages!: number[];
+  showConfirmation: boolean = false;
+  page: number = 1;
+  length = 50;
+  pageSize = 5;
+  pageIndex = 0;
+  currentPageIndex: number = 0;
 
   regexEmail =
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -58,7 +59,10 @@ export class homeComponent implements OnInit {
     this.myForm = new FormGroup({
       name: new FormControl('', Validators.required),
       phone: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.pattern(this.regexEmail)]),
+      email: new FormControl('', [
+        Validators.required,
+        Validators.pattern(this.regexEmail),
+      ]),
       address: new FormControl('', Validators.required),
       city: new FormControl('', Validators.required),
       district: new FormControl('', Validators.required),
@@ -81,7 +85,7 @@ export class homeComponent implements OnInit {
     const index = this.filteredUserList.findIndex(
       (item: any) => item.id === id
     );
-    if (index > -1) {
+    if (index > -1 && confirm('Are you sure you want to delete?')) {
       this.UserInfoList.splice(index, 1);
       localStorage.setItem('Data', JSON.stringify(this.UserInfoList));
     }
@@ -102,66 +106,72 @@ export class homeComponent implements OnInit {
     const Editdata = localStorage.getItem('userData');
     if (Editdata) {
       const parsedData = JSON.parse(Editdata);
-      this.filteredUserList = [...this.UserInfoList.map(item => {
-        if(item.id === this.editId) {
-          return {...item, ...parsedData};
-        }
-        return item;
-      })];
+      this.filteredUserList = [
+        ...this.UserInfoList.map((item) => {
+          if (item.id === this.editId) {
+            return { ...item, ...parsedData };
+          }
+          return item;
+        }),
+      ];
     }
     localStorage.setItem('Data', JSON.stringify(this.filteredUserList));
     window.location.reload();
     this.closeModal();
-
   }
 
   @HostListener('document:keydown.escape')
   closeOnEscape() {
     this.closeModal();
-    this.myForm.reset()
+    this.myForm.reset();
   }
 
-  openModal(id: any) {
+  showInfo(id: any) {
+    this.myForm.get('name')?.disable();
+    this.myForm.get('phone')?.disable();
+    this.myForm.get('email')?.disable();
+    this.myForm.get('address')?.disable();
+    this.myForm.get('city')?.disable();
+    this.myForm.get('district')?.disable();
+    this.myForm.get('ward')?.disable();
+
     const data = JSON.parse(localStorage.getItem('Data') || '');
     const userSelected = data.find((item: { id: string }) => item.id == id);
     this.myForm.patchValue(userSelected);
+    // this.isDisabled = true;
     this.isButtonVisible = false;
     this.modalOpen = true;
+
+    console.log(this.myForm.get('city')?.value);
   }
 
   closeModal() {
     localStorage.removeItem('userData');
+    this.myForm.get('name')?.enable();
+    this.myForm.get('phone')?.enable();
+    this.myForm.get('email')?.enable();
+    this.myForm.get('address')?.enable();
+    this.myForm.get('city')?.enable();
+    this.myForm.get('district')?.enable();
+    this.myForm.get('ward')?.enable();
     this.modalOpen = false;
-
   }
 
   preventPropagation(event: Event) {
     event.stopPropagation();
   }
-  getCurrentRowCount(): number {
-    const rowsPerPage = 5; // Số dòng trên mỗi trang
-    const currentPage = this.currentPage;
-    return Math.min(
-      this.filteredUserList.length - (currentPage - 1) * rowsPerPage,
-      rowsPerPage
-    );
-  }
-  previousPage(): void {
-    this.currentPage--;
-  }
-
-  nextPage() {
-    this.currentPage++;
-    this.totalPages = Math.ceil(this.UserInfoList.length / this.pageSize);
-    this.getCurrentRowCount();
-  }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      this.currentPage = +params['page'] || 1;
-    });
     const data = localStorage.getItem('Data');
-
+    this.myForm = new FormGroup({
+      name: new FormControl(''),
+      phone: new FormControl(''),
+      email: new FormControl(''),
+      address: new FormControl(''),
+      city: new FormControl(''),
+      district: new FormControl(''),
+      ward: new FormControl(''),
+    });
     if (data) {
       const parsedData = JSON.parse(data);
       this.filteredUserList = parsedData;

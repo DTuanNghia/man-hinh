@@ -1,10 +1,11 @@
-<div>
+<div class="user-cf">
   <div class="user-email">
     <p class="user-email-cf">Email: </p>
     <div class="user-email-search">
       <input type="text"
         [(ngModel)]="searchInput"
         class="user-email-search-input" #filter>
+
     </div>
     <!-- (keyup)="filterResults(filter.value)" -->
 
@@ -28,12 +29,12 @@
       </div>
       <div class="straight">
         <div
-          *ngFor="let userInfo of filteredUserList |paginate: { itemsPerPage: pageSize, currentPage: currentPage }">
+          *ngFor="let userInfo of filteredUserList ">
           <div class="second-row">
-            <p class="name-item" (click)="openModal(userInfo.id)">
+            <p class="name-item" (click)="showInfo(userInfo.id)">
               {{ userInfo.name }}
             </p>
-            <p class="email-item" (click)="openModal(userInfo.id)">
+            <p class="email-item" (click)="showInfo(userInfo.id)">
               {{ userInfo.email }}
             </p>
             <p class="icon-item">
@@ -51,22 +52,12 @@
 
   </section>
   <div class="footer">
-    <div class="footer1">Hiển thị {{getCurrentRowCount()}} trên tổng
-      {{filteredUserList.length}} bản ghi</div>
-    <button [disabled]="currentPage === 1" (click)="previousPage()"><i
-        class="fa-solid fa-angles-left"></i></button>
-    <div class="page-button">
-      <button class="number1" routerLink="/" routerLinkActive="active"
-        [queryParams]="{ page: 1 }">
-        1</button>
 
-      <button class="number2" routerLink="/" routerLinkActive="active"
-        [queryParams]="{ page: 2 }">
-        2</button>
-    </div>
-
-    <button [disabled]="currentPage === totalPages" (click)="nextPage()"><i
-        class="fa-solid fa-angles-right"></i></button>
+    <mat-paginator
+    [length]="filteredUserList.length"
+    [pageSize]="pageSize"
+      showFirstLastButtons>
+    </mat-paginator>
   </div>
 
 </div>
@@ -78,13 +69,15 @@
       <div class="modal-body">
         <div class="header"><h1 class="header_h1">Thông tin người dùng</h1></div>
         <div class="user-info">
+
           <div class="first">
             <p class="namemd">Tên <span class="require">*</span>:
               <input
-                class="input-cf"
+                class="input-cf input-name-cf"
                 type="text"
-                id="nameInput"
-                formControlName="name"></p>
+                id="Input"
+                formControlName="name"
+                ></p>
             <p class="phone">Số điện thoại: <input id="phoneInput"
                 class="input-cf"
                 type="number"
@@ -92,8 +85,8 @@
           </div>
           <div class="second">
             <p>Email <span class="require">*</span>:<input
-                class="input-cf"
-                id="emailInput"
+                class="input-cf "
+                id="Input"
                 type="email"
                 formControlName="email">
             </p>
@@ -107,29 +100,35 @@
                 formControlName="address"></p>
           </div>
           <div class="four">
-            <p>Tỉnh/Thành phố <span class="require">*</span>:
-              <input
-                class="input-cf"
-                id="cityInput"
-                type="text"
-                formControlName="city">
-            </p>
-            <p class="district">Quận/Huyện <span class="require">*</span>:
-              <input
-                class="input-cf"
-                id="districtInput"
-                type="text"
+            <label for="city" class="city">Tỉnh/Thành phố&nbsp;<span
+                class="require">*</span>:</label>
+            <select id="city" name="city" class="select-city"
+              formControlName="city">
+              <option value="" disabled>Chọn giá trị</option>
+              <option value='hn'>Hà Nội</option>
+              <option value="hcm">Hồ Chí Minh</option>
+            </select>
+            <div class="district">
+              <label for="district" class="district">Quận/Huyện <span
+                  class="require">*</span>:</label>
+              <select name="district" class="select-dis"
                 formControlName="district">
-            </p>
+                <option value="" disabled>Chọn giá trị</option>
+                <option value="huyen1">Huyện 1</option>
+                <option value="huyen2">Huyện 2</option>
+                <option value="quan1">Quận 1</option>
+                <option value="quan2">Quận 2</option>
+              </select>
+            </div>
           </div>
           <div class="five">
-            <p>Phường/Xã :
-              <input
-                class="input-cf"
-                id="wardInput"
-                type="text"
-                formControlName="ward">
-            </p>
+            <label for="ward" class="ward">Phường/Xã:</label>
+            <select name="ward" class="select-ward" formControlName="ward">
+              <option value="" disabled>Chọn giá trị</option>
+              <option value="xa1">Xã 1</option>
+              <option value="xa2">Xã 2</option>
+              <option value="xa3">Xã 3</option>
+            </select>
           </div>
 
         </div>

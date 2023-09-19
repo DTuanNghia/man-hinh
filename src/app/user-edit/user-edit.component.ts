@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output,ViewChild,ElementRef } from '@angular/core';
 import { UserInfo } from '../userInfo';
 import { AppComponent } from '../app.component';
 @Component({
@@ -9,6 +9,10 @@ import { AppComponent } from '../app.component';
 export class UserEditComponent implements OnInit {
   @Input() userInfo!: UserInfo;
   @Output() formUserEvent = new EventEmitter<any>();
+  @ViewChild('mySelect') mySelect!: ElementRef;
+  @ViewChild('mySelect1') mySelect1!: ElementRef;
+
+  isOpen: boolean = false;
 
   newData: any;
   name?: string;
@@ -19,12 +23,12 @@ export class UserEditComponent implements OnInit {
   district: string = 'Chọn giá trị';
   ward: string = 'Chọn giá trị';
   isDirty = false;
+  selectedOption!: string;
   emailIsValid?: boolean;
 
-  regexEmail =
-    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  regexEmail =/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  constructor(private appComponent: AppComponent) {}
+    constructor(private appComponent: AppComponent) {}
 
   onSave() {
 
@@ -37,7 +41,7 @@ export class UserEditComponent implements OnInit {
       district: this.district,
       ward: this.ward,
     };
-    
+
     this.formUserEvent.emit(UserData);
 
   }
@@ -45,22 +49,14 @@ export class UserEditComponent implements OnInit {
     this.isDirty = true;
   }
 
-  selectOption(option: string) {
-    this.city = option;
-  }
-  selectOption1(option: string) {
-    this.district = option;
-  }
-  selectOption2(option: string) {
-    this.ward = option;
-  }
-
   checkInput(): void {
+    const selectedValue = this.mySelect?.nativeElement.value;
+    const selectedValue1 = this.mySelect1?.nativeElement.value;
     if (
       !this.name ||
       !this.address ||
-      this.city === 'Chọn giá trị' ||
-      this.district === 'Chọn giá trị'
+      selectedValue === "none" ||
+      selectedValue1 === "none"
     ) {
       alert('Vui lòng điền đầy đủ thông tin');
     } else if (!this.regexEmail.test(this.email)) {

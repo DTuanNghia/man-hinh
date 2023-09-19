@@ -1,28 +1,30 @@
-<div class="user">
-  <h1 class="user_list" style="color: rgba(39,103,246,255);">
-    <i class="user-icon fa-solid fa-user"></i>
-    Danh sách người dùng
-  </h1>
-  <button class="btn" nz-button [nzType]="'primary'"
-    (click)="showModal()"><span>
-      <i class="plus-user-add-button fa-solid fa-circle-plus"></i>
-      Người dùng</span>
-  </button>
+<div class="user-bg">
+  <div class="user">
+    <h1 class="user_list" style="color: rgba(39,103,246,255);">
+      <i class="user-icon fa-solid fa-user"></i>
+      Danh sách người dùng
+    </h1>
+    <button class="btn" nz-button [nzType]="'primary'"
+      (click)="showModal()"><span>
+        <i class="plus-user-add-button fa-solid fa-circle-plus"></i>
+        Người dùng</span>
+    </button>
+  </div>
+  <nz-modal
+    (nzOnCancel)="handleCancel()"
+    [(nzVisible)]="isVisible"
+    [nzWidth]="'1250px'"
+    [nzBodyStyle]="{ border:'4px',overflow:'hidden',padding:'0'}"
+    [nzClosable]="false"
+    [nzFooter]=null>
+
+    <ng-container *nzModalContent>
+      <app-user-edit (formUserEvent)="handleOk($event)"></app-user-edit>
+    </ng-container>
+  </nz-modal>
+
+  <app-home></app-home>
+
+  <!-- <app-user-edit (formUserEvent)="handleOk($event)"></app-user-edit> -->
+  <router-outlet></router-outlet>
 </div>
-<nz-modal
-  (nzOnCancel)="handleCancel()"
-  [(nzVisible)]="isVisible"
-  [nzWidth]="'1280px'"
-  [nzBodyStyle]="{ height:'404px',border:'4px',overflow:'hidden'}"
-  [nzClosable]="false"
-  [nzFooter]=null>
-
-  <ng-container *nzModalContent>
-    <app-user-edit (formUserEvent)="handleOk($event)"></app-user-edit>
-  </ng-container>
-</nz-modal>
-
-<app-home></app-home>
-
-<!-- <app-user-edit (formUserEvent)="handleOk($event)"></app-user-edit> -->
-<router-outlet></router-outlet>

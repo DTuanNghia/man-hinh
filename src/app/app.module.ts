@@ -23,7 +23,11 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
-
+// bootstrap
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+//ng material
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatDialogModule} from '@angular/material/dialog';
 registerLocaleData(en);
 
 const routes: Route[] = [
@@ -48,6 +52,9 @@ const routes: Route[] = [
     NzPaginationModule,
     NgxPaginationModule,
     ReactiveFormsModule,
+    NgbModule,
+    MatPaginatorModule,
+    MatDialogModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }, UserService],
 

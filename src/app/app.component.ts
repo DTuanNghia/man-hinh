@@ -1,6 +1,7 @@
 import { Component, OnInit, inject,Input } from '@angular/core';
 import { UserService } from './user.service';
-
+import { UserEditComponent } from './user-edit/user-edit.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,7 +18,7 @@ export class AppComponent implements OnInit {
 
   isVisible = false;
   UserInfoList: any = [ ];
-  constructor(private readonly userService: UserService) {
+  constructor(private readonly userService: UserService,public dialog: MatDialog) {
     this.UserInfoList = this.UserService.getAllUserlist();
     this.filteredUserList = this.UserInfoList;
 
@@ -53,7 +54,11 @@ export class AppComponent implements OnInit {
 
     localStorage.setItem('Data', JSON.stringify(this.UserInfoList));
   }
-
+  openModal(){
+    const dialogRef = this.dialog.open(UserEditComponent, {
+      width: '300px'
+    });
+  }
   ngOnInit(): void {
 
     const data = localStorage.getItem('Data');

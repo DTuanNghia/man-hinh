@@ -15,9 +15,9 @@ export class UserService {
       phone: 1123456,
       email: 'nghia123@gmail.com',
       address: '16 Hoa Binh , Kham Thien ,Dong Da',
-      city: 'Hà Nội',
-      district: 'Dong Da',
-      ward: 'Kham Thien',
+      city: 'hn',
+      district: 'huyen1',
+      ward: 'xa1',
     },
     {
       id: 2,
@@ -25,9 +25,9 @@ export class UserService {
       phone: 123456789,
       email: 'nghia1@gmail.com',
       address: '16 Hoa Binh , Kham Thien ,Dong Da',
-      city: 'Ninh Bình',
-      district: 'Dong Da',
-      ward: 'Kham Thien',
+      city: 'hcm',
+      district: 'huyen2',
+      ward: 'xa2',
     },
     {
       id: 3,
@@ -35,9 +35,9 @@ export class UserService {
       phone: 12345689,
       email: 'nghia2@gmail.com',
       address: '16 Hoa Binh , Kham Thien ,Dong Da',
-      city: 'Hải Phòng',
-      district: 'Dong Da',
-      ward: 'Kham Thien',
+      city: 'hn',
+      district: 'huyen1',
+      ward: 'xa2',
     },
     {
       id: 4,
@@ -45,9 +45,9 @@ export class UserService {
       phone: 123456753,
       email: 'nghia3@gmail.com',
       address: '16 Hoa Binh , Kham Thien ,Dong Da',
-      city: 'Ha Noi',
-      district: 'Dong Da',
-      ward: 'Kham Thien',
+      city: 'hcm',
+      district: 'quan1',
+      ward: 'xa3',
     },
     {
       id: 5,
@@ -55,9 +55,9 @@ export class UserService {
       phone: 123456753,
       email: 'nghia3@gmail.com',
       address: '16 Hoa Binh , Kham Thien ,Dong Da',
-      city: 'Ha Noi',
-      district: 'Dong Da',
-      ward: 'Kham Thien',
+      city: 'hcm',
+      district: 'quan2',
+      ward: 'xa1',
     },
     {
       id: 6,
@@ -65,9 +65,9 @@ export class UserService {
       phone: 123456753,
       email: 'nghia3@gmail.com',
       address: '16 Hoa Binh , Kham Thien ,Dong Da',
-      city: 'Ha Noi',
-      district: 'Dong Da',
-      ward: 'Kham Thien',
+      city: 'hn',
+      district: 'quan1',
+      ward: 'xa3',
     },
   ];
 
@@ -76,10 +76,10 @@ export class UserService {
     return this.UserInfoList;
   }
   updateUser(user: any): void {
-    const index = this.UserInfoList.findIndex(u => u.id === user.id);
+    const index = this.UserInfoList.findIndex((u) => u.id === user.id);
     if (index !== 0) {
       this.UserInfoList[index] = user;
-  console.log(index)
+      console.log(index);
     }
   }
   getUserlistByEmail(email: string): UserInfo | undefined {
