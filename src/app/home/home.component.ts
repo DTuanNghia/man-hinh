@@ -8,7 +8,12 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder,
+} from '@angular/forms';
 import { UserInfo } from '../userInfo';
 import { ActivatedRoute } from '@angular/router';
 
@@ -22,7 +27,6 @@ export class homeComponent implements OnInit {
   @Output() formUserEvent = new EventEmitter<any>();
 
   myForm: FormGroup;
-  inputValue: string = '';
   data = '';
   searchQuery: any;
 
@@ -46,27 +50,25 @@ export class homeComponent implements OnInit {
   editData: string = '';
 
   showConfirmation: boolean = false;
-  page: number = 1;
-  length = 50;
+  page = 1;
   pageSize = 5;
-  pageIndex = 0;
-  currentPageIndex: number = 0;
+  currentPage = 1;
+  startItem!: number;
+  endItem!: number;
 
   regexEmail =
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  regexPhone = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder) {
     this.myForm = new FormGroup({
       name: new FormControl('', Validators.required),
-      phone: new FormControl('', Validators.required),
-      email: new FormControl('', [
-        Validators.required,
-        Validators.pattern(this.regexEmail),
-      ]),
+      phone: new FormControl(''),
+      email: new FormControl('', [Validators.required, Validators.email]),
       address: new FormControl('', Validators.required),
       city: new FormControl('', Validators.required),
       district: new FormControl('', Validators.required),
-      ward: new FormControl('', Validators.required),
+      ward: new FormControl(''),
     });
     this.UserInfoList = this.UserService.getAllUserlist();
     this.filteredUserList = this.UserInfoList;
@@ -102,7 +104,7 @@ export class homeComponent implements OnInit {
 
   onSubmit() {
     const formData = this.myForm.value; // Lấy giá trị của form
-    localStorage.setItem('userData', JSON.stringify(formData)); // Lưu vào LocalStorage
+    localStorage.setItem('userData', JSON.stringify(formData));
     const Editdata = localStorage.getItem('userData');
     if (Editdata) {
       const parsedData = JSON.parse(Editdata);
@@ -115,9 +117,19 @@ export class homeComponent implements OnInit {
         }),
       ];
     }
-    localStorage.setItem('Data', JSON.stringify(this.filteredUserList));
-    window.location.reload();
-    this.closeModal();
+    if (Editdata) {
+      const parsedData = JSON.parse(Editdata);
+      if (!this.regexEmail.test(parsedData.email)) {
+        alert('Vui lòng nhập đúng định dạng email');
+      } else if (!this.regexPhone.test(parsedData.phone)) {
+        alert('Vui lòng nhập số điện thoại hợp lệ');
+      } else {
+        alert('Sửa thông tin người dùng thành công');
+        localStorage.setItem('Data', JSON.stringify(this.filteredUserList));
+        window.location.reload();
+        this.closeModal();
+      }
+    }
   }
 
   @HostListener('document:keydown.escape')
@@ -138,11 +150,8 @@ export class homeComponent implements OnInit {
     const data = JSON.parse(localStorage.getItem('Data') || '');
     const userSelected = data.find((item: { id: string }) => item.id == id);
     this.myForm.patchValue(userSelected);
-    // this.isDisabled = true;
     this.isButtonVisible = false;
     this.modalOpen = true;
-
-    console.log(this.myForm.get('city')?.value);
   }
 
   closeModal() {
@@ -161,7 +170,16 @@ export class homeComponent implements OnInit {
     event.stopPropagation();
   }
 
+  updateItemCount(): void {
+    this.startItem = (this.page - 1) * this.pageSize + 1;
+    this.endItem = Math.min(
+      this.startItem + this.pageSize - 1,
+      this.filteredUserList.length
+    );
+  }
+
   ngOnInit(): void {
+    this.updateItemCount();
     const data = localStorage.getItem('Data');
     this.myForm = new FormGroup({
       name: new FormControl(''),
@@ -172,11 +190,11 @@ export class homeComponent implements OnInit {
       district: new FormControl(''),
       ward: new FormControl(''),
     });
+
     if (data) {
       const parsedData = JSON.parse(data);
       this.filteredUserList = parsedData;
       this.UserInfoList = this.filteredUserList;
-      console.log(parsedData);
     } else {
       localStorage.setItem('Data', JSON.stringify(this.UserInfoList));
     }

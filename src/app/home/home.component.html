@@ -52,12 +52,18 @@
 
   </section>
   <div class="footer">
-
-    <!-- <ngb-pagination
-  [(page)]="page"
-  [pageSize]="pageSize"
-  [collectionSize]="filteredUserList.length"></ngb-pagination>
-  </div> -->
+    <p class="totalpage">Hiển thị {{startItem}} - {{endItem}} trên tổng
+      {{this.filteredUserList.length}} bản ghi</p>
+      <div class="pagination">
+    <ngb-pagination
+      [(ngModel)]="currentPage"
+      [(page)]="page"
+      [pageSize]="pageSize"
+      [collectionSize]="filteredUserList.length"
+      (pageChange)="updateItemCount()">
+    </ngb-pagination>
+</div>
+  </div>
 
 </div>
 
@@ -75,8 +81,7 @@
                 class="input-cf input-name-cf"
                 type="text"
                 id="Input"
-                formControlName="name"
-                ></p>
+                formControlName="name"></p>
             <p class="phone">Số điện thoại: <input id="phoneInput"
                 class="input-cf"
                 type="number"
@@ -103,7 +108,7 @@
                 class="require">*</span>:</label>
             <select id="city" name="city" class="select-city"
               formControlName="city">
-              <option value="" disabled>Chọn giá trị</option>
+              <option value disabled>Chọn giá trị</option>
               <option value='hn'>Hà Nội</option>
               <option value="hcm">Hồ Chí Minh</option>
             </select>
@@ -112,7 +117,7 @@
                   class="require">*</span>:</label>
               <select name="district" class="select-dis"
                 formControlName="district">
-                <option value="" disabled>Chọn giá trị</option>
+                <option value disabled>Chọn giá trị</option>
                 <option value="huyen1">Huyện 1</option>
                 <option value="huyen2">Huyện 2</option>
                 <option value="quan1">Quận 1</option>
@@ -123,7 +128,7 @@
           <div class="five">
             <label for="ward" class="ward">Phường/Xã:</label>
             <select name="ward" class="select-ward" formControlName="ward">
-              <option value="" disabled>Chọn giá trị</option>
+              <option value disabled>Chọn giá trị</option>
               <option value="xa1">Xã 1</option>
               <option value="xa2">Xã 2</option>
               <option value="xa3">Xã 3</option>

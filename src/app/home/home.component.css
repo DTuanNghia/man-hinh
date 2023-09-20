@@ -42,7 +42,7 @@
 .user-email-cf{
   font-weight: 700  ;
   margin-right: 10px;
-  margin-top: 15px;
+  margin-top: 12px;
 }
 
 .user-email-search
@@ -106,8 +106,9 @@ outline: none;
 .second-row{
   display: flex;
  background-color: #fdfdfd;
- border-top: 1px solid #ced1d1;
-
+ /* border-top: 1px solid #ced1d1; */
+ border-bottom: 1px solid #ced1d1;
+ overflow: hidden;
 }
 .straight{
   flex-grow: 1;
@@ -185,7 +186,7 @@ outline: none;
   height: 380px;
   background-color: white;
   border-radius: 4px;
-
+  padding: 0px;
 }
 .header_h1{
   font-weight: 600;
@@ -330,12 +331,13 @@ input::-webkit-inner-spin-button {
 }
 
 /* --Footer-- */
-
-
-.number1{
-  margin-left: 5px ;
+.footer{
+  align-items: center;
 }
-.number2{
-  margin: 0 5px ;
-
+.pagination{
+  margin-left: 250px;
 }
+.totalpage{
+  width: 250px;
+}
+

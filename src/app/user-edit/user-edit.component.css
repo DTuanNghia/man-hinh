@@ -17,8 +17,9 @@
     height: 370px;
     background-color: white;
     border-radius: 4px;
-
   }
+
+
 
   .input-cf{
     border-radius: 3px;
@@ -56,6 +57,7 @@
     font-weight: 600;
     border-top: 1px solid #dfe3e6;
     border-bottom: 1px solid #dfe3e6;
+    
   }
 
   .user-info,p{
