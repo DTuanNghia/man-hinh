@@ -87,7 +87,7 @@ export class homeComponent implements OnInit {
     const index = this.filteredUserList.findIndex(
       (item: any) => item.id === id
     );
-    if (index > -1 && confirm('Are you sure you want to delete?')) {
+    if (index > -1 && confirm('Bạn có chắc chắn muốn xóa người dùng này ?')) {
       this.UserInfoList.splice(index, 1);
       localStorage.setItem('Data', JSON.stringify(this.UserInfoList));
     }
