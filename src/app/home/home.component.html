@@ -70,7 +70,7 @@
 <!-- ------------------------- -->
 <form [formGroup]="myForm">
   <div class="modal" [ngClass]="{'show': modalOpen}" (click)="closeModal()">
-    <div class="modal-overlay" >
+    <div class="modal-overlay" (click)="preventPropagation($event)">
       <div class="modal-body">
         <div class="header"><h1 class="header_h1">Thông tin người dùng</h1></div>
         <div class="user-info">

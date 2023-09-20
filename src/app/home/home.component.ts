@@ -181,15 +181,6 @@ export class homeComponent implements OnInit {
   ngOnInit(): void {
     this.updateItemCount();
     const data = localStorage.getItem('Data');
-    this.myForm = new FormGroup({
-      name: new FormControl(''),
-      phone: new FormControl(''),
-      email: new FormControl(''),
-      address: new FormControl(''),
-      city: new FormControl(''),
-      district: new FormControl(''),
-      ward: new FormControl(''),
-    });
 
     if (data) {
       const parsedData = JSON.parse(data);
