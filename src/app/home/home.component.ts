@@ -164,6 +164,7 @@ export class homeComponent implements OnInit {
     this.myForm.get('district')?.enable();
     this.myForm.get('ward')?.enable();
     this.modalOpen = false;
+    this.myForm.reset();
   }
 
   preventPropagation(event: Event) {

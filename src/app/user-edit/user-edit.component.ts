@@ -74,7 +74,16 @@ export class UserEditComponent implements OnInit {
       alert('Vui lòng điền đầy đủ thông tin');
     } else if (!this.regexEmail.test(this.email)) {
       alert('Vui lòng nhập đúng định dạng email');
-    } else {
+    }
+      else if (this.phone != null){
+        if(!this.regexPhone.test(this.phone.toString())){
+          alert('Vui lòng nhập số điện thoại hợp lệ');
+        }
+        else{
+          this.onSave();
+        }
+      }
+     else {
       this.onSave();
     }
   }
