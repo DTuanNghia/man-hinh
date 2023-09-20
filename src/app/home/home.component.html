@@ -29,7 +29,7 @@
       </div>
       <div class="straight">
         <div
-          *ngFor="let userInfo of filteredUserList ">
+          *ngFor="let userInfo of filteredUserList | slice: (page-1) * pageSize : page * pageSize">
           <div class="second-row">
             <p class="name-item" (click)="showInfo(userInfo.id)">
               {{ userInfo.name }}
@@ -53,12 +53,11 @@
   </section>
   <div class="footer">
 
-    <mat-paginator
-    [length]="filteredUserList.length"
-    [pageSize]="pageSize"
-      showFirstLastButtons>
-    </mat-paginator>
-  </div>
+    <!-- <ngb-pagination
+  [(page)]="page"
+  [pageSize]="pageSize"
+  [collectionSize]="filteredUserList.length"></ngb-pagination>
+  </div> -->
 
 </div>
 
