@@ -135,7 +135,6 @@ export class homeComponent implements OnInit {
   @HostListener('document:keydown.escape')
   closeOnEscape() {
     this.closeModal();
-    this.myForm.reset();
   }
 
   showInfo(id: any) {
