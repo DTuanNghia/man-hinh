@@ -12,8 +12,7 @@
 
     <!-- (keydown.enter)="filterResults(filter.value)" button enter -->
     <button class="user-button-search"
-      (click)="filterResults(filter.value)"
-      >
+      (click)="filterResults(filter.value)">
       <i class="user-button-search-icon fa-solid fa-magnifying-glass"></i>
     </button>
 
@@ -22,10 +21,10 @@
     <div class="user-table">
       <div class="first-row">
         <p class="name">Tên
-          <i class=" fa-solid fa-sort"></i>
+          <i class=" fa-solid fa-sort" (click)="sort()"></i>
         </p>
         <p class="email">Email
-          <i class="fa-solid fa-sort-down"></i>
+          <i class="fa-solid fa-sort-down"  (click)="sortEmail()"></i>
         </p>
         <br>
       </div>
@@ -56,15 +55,14 @@
   <div class="footer">
     <p class="totalpage">Hiển thị {{startItem}} - {{endItem}} trên tổng
       {{this.filteredUserList.length}} bản ghi</p>
-      <div class="pagination">
-    <ngb-pagination
-
-      [(page)]="page"
-      [pageSize]="pageSize"
-      [collectionSize]="filteredUserList.length"
-      (pageChange)="updateItemCount()">
-    </ngb-pagination>
-</div>
+    <div class="pagination">
+      <ngb-pagination
+        [(page)]="page"
+        [pageSize]="pageSize"
+        [collectionSize]="filteredUserList.length"
+        (pageChange)="updateItemCount()">
+      </ngb-pagination>
+    </div>
   </div>
 
 </div>

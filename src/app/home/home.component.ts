@@ -27,9 +27,9 @@ export class homeComponent implements OnInit {
   @Output() formUserEvent = new EventEmitter<any>();
 
   myForm: FormGroup;
-  data = '';
-  searchQuery: any;
 
+  searchQuery: any;
+  isAscending=true;
   isButtonVisible = false;
   modalOpen = false;
   editId!: number;
@@ -82,6 +82,29 @@ export class homeComponent implements OnInit {
       (UserInfo: { email: string }) =>
         UserInfo?.email.toLowerCase().includes(text.toLowerCase())
     );
+  }
+
+  sort() {
+    if (this.isAscending) {
+      this.filteredUserList.sort((a, b) => b.name.localeCompare(a.name));
+      console.log("down");
+      this.isAscending = false;
+    } else {
+      this.filteredUserList.sort((a, b) => a.name.localeCompare(b.name));
+      console.log("up");
+      this.isAscending = true;
+    }
+  }
+  sortEmail() {
+    if (this.isAscending) {
+      this.filteredUserList.sort((a, b) => b.email.localeCompare(a.email));
+      console.log("down");
+      this.isAscending = false;
+    } else {
+      this.filteredUserList.sort((a, b) => a.email.localeCompare(b.email));
+      console.log("up");
+      this.isAscending = true;
+    }
   }
 
   deleteItem(id: number): void {
@@ -139,10 +162,18 @@ export class homeComponent implements OnInit {
   }
 
   showInfo(id: any) {
-    const fieldsToDisable = ['name', 'phone', 'email', 'address', 'city', 'district', 'ward'];
-    fieldsToDisable.forEach(field => {
+    const fieldsToDisable = [
+      'name',
+      'phone',
+      'email',
+      'address',
+      'city',
+      'district',
+      'ward',
+    ];
+    fieldsToDisable.forEach((field) => {
       this.myForm.get(field)?.disable();
-  });
+    });
 
     const data = JSON.parse(localStorage.getItem('Data') || '');
     const userSelected = data.find((item: { id: string }) => item.id == id);
@@ -153,10 +184,18 @@ export class homeComponent implements OnInit {
 
   closeModal() {
     localStorage.removeItem('userData');
-    const fieldsToEnable = ['name', 'phone', 'email', 'address', 'city', 'district', 'ward'];
-    fieldsToEnable.forEach(field => {
+    const fieldsToEnable = [
+      'name',
+      'phone',
+      'email',
+      'address',
+      'city',
+      'district',
+      'ward',
+    ];
+    fieldsToEnable.forEach((field) => {
       this.myForm.get(field)?.enable();
-  });
+    });
 
     this.modalOpen = false;
     this.myForm.reset();

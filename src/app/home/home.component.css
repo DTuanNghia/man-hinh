@@ -97,12 +97,17 @@ outline: none;
 .name{
   margin-left: 40px;
   font-weight: 700 ;
+  display: flex;
+  align-items: center;
 }
 .email{
   margin-left: 450px;
   font-weight: 700;
 }
-
+.icon-down{
+  margin-left: -9px;
+  margin-top: 6px;
+}
 .second-row{
   display: flex;
  background-color: #fdfdfd;
