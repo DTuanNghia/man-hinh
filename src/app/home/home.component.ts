@@ -29,7 +29,7 @@ export class homeComponent implements OnInit {
   myForm: FormGroup;
 
   searchQuery: any;
-  isAscending=true;
+  isAscending = true;
   isButtonVisible = false;
   modalOpen = false;
   editId!: number;
@@ -87,22 +87,20 @@ export class homeComponent implements OnInit {
   sort() {
     if (this.isAscending) {
       this.filteredUserList.sort((a, b) => b.name.localeCompare(a.name));
-      console.log("down");
+      console.log('down');
       this.isAscending = false;
     } else {
       this.filteredUserList.sort((a, b) => a.name.localeCompare(b.name));
-      console.log("up");
+      console.log('up');
       this.isAscending = true;
     }
   }
   sortEmail() {
     if (this.isAscending) {
       this.filteredUserList.sort((a, b) => b.email.localeCompare(a.email));
-      console.log("down");
       this.isAscending = false;
     } else {
       this.filteredUserList.sort((a, b) => a.email.localeCompare(b.email));
-      console.log("up");
       this.isAscending = true;
     }
   }
