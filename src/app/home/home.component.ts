@@ -73,6 +73,7 @@ export class homeComponent implements OnInit {
     this.UserInfoList = this.UserService.getAllUserlist();
     this.filteredUserList = this.UserInfoList;
   }
+
   filterResults(text: string) {
     if (!text) {
       this.filteredUserList = this.UserInfoList;
@@ -138,13 +139,10 @@ export class homeComponent implements OnInit {
   }
 
   showInfo(id: any) {
-    this.myForm.get('name')?.disable();
-    this.myForm.get('phone')?.disable();
-    this.myForm.get('email')?.disable();
-    this.myForm.get('address')?.disable();
-    this.myForm.get('city')?.disable();
-    this.myForm.get('district')?.disable();
-    this.myForm.get('ward')?.disable();
+    const fieldsToDisable = ['name', 'phone', 'email', 'address', 'city', 'district', 'ward'];
+    fieldsToDisable.forEach(field => {
+      this.myForm.get(field)?.disable();
+  });
 
     const data = JSON.parse(localStorage.getItem('Data') || '');
     const userSelected = data.find((item: { id: string }) => item.id == id);
@@ -155,13 +153,11 @@ export class homeComponent implements OnInit {
 
   closeModal() {
     localStorage.removeItem('userData');
-    this.myForm.get('name')?.enable();
-    this.myForm.get('phone')?.enable();
-    this.myForm.get('email')?.enable();
-    this.myForm.get('address')?.enable();
-    this.myForm.get('city')?.enable();
-    this.myForm.get('district')?.enable();
-    this.myForm.get('ward')?.enable();
+    const fieldsToEnable = ['name', 'phone', 'email', 'address', 'city', 'district', 'ward'];
+    fieldsToEnable.forEach(field => {
+      this.myForm.get(field)?.enable();
+  });
+
     this.modalOpen = false;
     this.myForm.reset();
   }
