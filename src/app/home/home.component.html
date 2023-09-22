@@ -4,14 +4,16 @@
     <div class="user-email-search">
       <input type="text"
         [(ngModel)]="searchInput"
-        class="user-email-search-input" #filter>
+        class="user-email-search-input" #filter
+        (keyup)="filterResults(filter.value)">
 
     </div>
     <!-- (keyup)="filterResults(filter.value)" -->
 
     <!-- (keydown.enter)="filterResults(filter.value)" button enter -->
     <button class="user-button-search"
-      (click)="filterResults(filter.value)">
+      (click)="filterResults(filter.value)"
+      >
       <i class="user-button-search-icon fa-solid fa-magnifying-glass"></i>
     </button>
 
@@ -56,7 +58,7 @@
       {{this.filteredUserList.length}} bản ghi</p>
       <div class="pagination">
     <ngb-pagination
-      
+
       [(page)]="page"
       [pageSize]="pageSize"
       [collectionSize]="filteredUserList.length"
